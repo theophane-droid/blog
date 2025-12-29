@@ -137,7 +137,7 @@ Retrouvez ici des articles techniques, des analyses de vulnérabilités, des gui
 
   # Edit post (lien GitHub pour éditer)
   [params.editPost]
-    URL = "https://github.com/theophane-droid/blog/tree/main/nobids/content"
+    URL = "https://github.com/theophane-droid/blog/tree/master/nobisd/content"
     Text = "Suggérer une modification"
     appendFilePath = true
 
