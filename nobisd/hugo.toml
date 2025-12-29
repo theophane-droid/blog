@@ -46,6 +46,7 @@ copyright = "© 2025 NobisD | Non Nobis, Domine"
   title = "NobisD"
   description = "Non Nobis — Cybersécurité, Formations & Veille Technique"
   author = "NobisD"
+  defaultTheme = "dark"
   
   # Images
   images = ["/images/nobisd-og.png"]  # Open Graph image
