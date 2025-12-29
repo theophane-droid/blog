@@ -1,0 +1,69 @@
+{{- if .IsPage -}}
+  {{- $ptype := (site.Params.schema.publisherType | default "Organization") | title -}}
+
+  {{- $kw := slice -}}
+  {{- if .Params.keywords -}}
+    {{- range .Params.keywords -}}{{- $kw = $kw | append . -}}{{- end -}}
+  {{- else if .Params.tags -}}
+    {{- range .Params.tags -}}{{- $kw = $kw | append . -}}{{- end -}}
+  {{- end -}}
+
+  {{- $desc := (.Summary | plainify) -}}
+  {{- with .Description -}}
+    {{- $desc = (. | plainify) -}}
+  {{- end -}}
+
+  {{- $img := "" -}}
+  {{- with .Params.cover.image -}}
+    {{- if ne $.Params.cover.relative true -}}
+      {{- $img = (. | absURL) -}}
+    {{- else -}}
+      {{- $img = ((path.Join $.RelPermalink .) | absURL) -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $pgimgs := partial "templates/_funcs/get-page-images" . -}}
+    {{- with index $pgimgs 0 -}}
+      {{- $img = .Permalink -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $authorParam := (.Params.author | default site.Params.author) -}}
+  {{- $author := dict "@type" "Person" "name" $authorParam -}}
+  {{- if or (eq (printf "%T" $authorParam) "[]string") (eq (printf "%T" $authorParam) "[]interface {}") -}}
+    {{- $alist := slice -}}
+    {{- range $authorParam -}}
+      {{- $alist = $alist | append (dict "@type" "Person" "name" .) -}}
+    {{- end -}}
+    {{- $author = $alist -}}
+  {{- end -}}
+
+  {{- $post := dict
+      "@context" "https://schema.org"
+      "@type" "BlogPosting"
+      "headline" (.Title | plainify)
+      "name"     (.Title | plainify)
+      "description" $desc
+      "keywords" $kw
+      "articleBody" (.Content | htmlUnescape | plainify)
+      "wordCount" .WordCount
+      "inLanguage" (.Language.Lang | default "en-us")
+      "datePublished" (.PublishDate | time.Format "2006-01-02T15:04:05Z07:00")
+      "dateModified"  (.Lastmod     | time.Format "2006-01-02T15:04:05Z07:00")
+      "author" $author
+      "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+      "publisher" (dict
+        "@type" $ptype
+        "name" site.Title
+        "logo" (dict
+          "@type" "ImageObject"
+          "url" (site.Params.assets.favicon | default "favicon.ico" | absURL)
+        )
+      )
+  -}}
+
+  {{- if ne $img "" -}}
+    {{- $post = merge $post (dict "image" $img) -}}
+  {{- end -}}
+
+<script type="application/ld+json">{{ $post | jsonify | safeHTML }}</script>
+{{- end -}}
