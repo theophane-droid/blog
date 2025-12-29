@@ -1,5 +1,5 @@
 # Prod 
-nobdis.fr {
+nobisd.fr {
     # Active la compression
     encode gzip
 
