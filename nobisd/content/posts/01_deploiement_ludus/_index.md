@@ -60,7 +60,7 @@ Ludus est un outil de déploiement d'infrastructure (Infrastructure-as-Code) sp�
 
 - **Rapidité :** On passe de plusieurs jours de configuration manuelle à quelques minutes (le temps de la construction et du déploiement des images).
 - **Reproductibilité :** Si vous cassez tout (ce qui peut régulièrement arriver), vous pouvez raser le lab et le reconstruire à l'identique d'une seule commande.
-- **Prêt pour l'attaque :** Il facilite l'intégration d'outils comme Ghostwriter, la suite Elastic pour le monitoring, ou des environnements AD déjà durcis ou vulnérables selon vos besoins
+- **Prêt pour les test :** Il facilite l'intégration d'outils comme Ghostwriter, la suite Elastic pour le monitoring, ou des environnements AD déjà durcis ou vulnérables selon vos besoins
 
 ### Architecture de Ludus
 
