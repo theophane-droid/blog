@@ -172,7 +172,7 @@ Retrouvez ici des articles techniques, des analyses de vulnérabilités, des gui
 # Services
 [services]
   [services.googleAnalytics]
-    # ID = "G-XXXXXXXXXX"  # Décommente et ajoute ton ID
+    ID = "G-X4N2M7N6ZB"
 
 # Permalinks
 [permalinks]
