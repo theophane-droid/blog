@@ -2,7 +2,7 @@ baseURL = "/"
 languageCode = "fr-fr"
 title = "NobisD"
 theme = "PaperMod"
-copyright = "© 2025 NobisD | Non Nobis, Domine"
+copyright = "© 2025 NobisD | Let’s the defense running"
 
 # Pagination
 [pagination]
