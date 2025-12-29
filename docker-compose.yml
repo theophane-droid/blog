@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  hugo:
+    image: hugomods/hugo
+    container_name: hugo-builder
+    volumes:
+      - ./nobisd:/src
+      - ./public:/target
+    command: --destination /target
+
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"  # HTTP/3
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./public:/usr/share/caddy
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: unless-stopped
+    depends_on:
+      - hugo
+
+volumes:
+  caddy_data:
+  caddy_config:

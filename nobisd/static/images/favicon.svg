@@ -1,0 +1,6 @@
+<svg width="32" height="32" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 50 5 L 90 20 L 90 60 Q 90 95 50 115 Q 10 95 10 60 L 10 20 Z" 
+        fill="#4a90e2" stroke="#4a90e2" stroke-width="2"/>
+  <text x="50" y="75" font-size="60" font-weight="bold" fill="#ffffff" 
+        text-anchor="middle" font-family="Arial, sans-serif">N</text>
+</svg>
