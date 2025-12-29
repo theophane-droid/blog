@@ -1,34 +1,33 @@
-# Remplace example.com par ton domaine
-# localhost {
-#     # Active la compression
-#     encode gzip
-#
-#     # Sert les fichiers statiques depuis /usr/share/caddy
-#     root * /usr/share/caddy
-#     file_server
-#
-#     # Headers de sécurité
-#     header {
-#         # Empêche l'iframe embedding
-#         X-Frame-Options "SAMEORIGIN"
-#         # Active XSS protection
-#         X-XSS-Protection "1; mode=block"
-#         # Empêche le MIME sniffing
-#         X-Content-Type-Options "nosniff"
-#         # Referrer policy
-#         Referrer-Policy "strict-origin-when-cross-origin"
-#     }
-#
-#     # Logs
-#     log {
-#         output file /data/access.log
-#         format json
-#     }
-# }
-#
-# Configuration pour localhost/IP (sans HTTPS automatique)
-# Décommente si tu veux tester en local sans domaine
-:80 {
+# Prod 
+nobdis.fr {
+    # Active la compression
+    encode gzip
+
+    # Sert les fichiers statiques depuis /usr/share/caddy
+    root * /usr/share/caddy
+    file_server
+
+    # Headers de sécurité
+    header {
+        # Empêche l'iframe embedding
+        X-Frame-Options "SAMEORIGIN"
+        # Active XSS protection
+        X-XSS-Protection "1; mode=block"
+        # Empêche le MIME sniffing
+        X-Content-Type-Options "nosniff"
+        # Referrer policy
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+
+    # Logs
+    log {
+        output file /data/access.log
+        format json
+    }
+}
+
+# Test mod
+:443 {
     tls internal
     root * /usr/share/caddy
     file_server
