@@ -1,14 +1,10 @@
-### README (English)
-
-````md
 # Blog
 
 Source code and content for **nobisd.fr** (posts, pages, theme overrides, and build/deploy config).
 
 ## Website
 - Production: https://nobisd.fr
-- Sitemap: https://nobisd.fr/sitemap.xml
-- RSS: https://nobisd.fr/index.xml (may vary depending on config)
+- RSS: https://nobisd.fr/index.xml
 
 ## Tech
 - Hugo (static site generator)
@@ -47,4 +43,3 @@ hugo new posts/my-post.md
 ## Contributing
 
 Issues and PRs welcome (typos, improvements, suggestions).
-
