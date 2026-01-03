@@ -20,7 +20,7 @@ A la fin de cet article, nous aurons compris comment fonctionne Ludus et déploy
 
 ![image.png](img/image%201.png)
 
-# Prérequis
+## Prérequis
 
 ### Hardware
 
