@@ -1,16 +1,17 @@
 ---
-title: "Déploiement d'un cyberrange avec Ludus"
+title: "Déployer un lab Active Directory avec ludus sur Proxmox"
 date: 2025-12-29
 draft: false
 tags: ["cybersécurité", "lab"]
-slug: "01_deploiement_ludus"
+slug: "cyberrange-ludus-proxmox"
+description: "Guide pratique pour déployer un cyber range avec Ludus sur Proxmox : templates, VLAN, Active Directory et une machine Kali."
 ---
 
 Avoir son lab, perso ou au travail est la promesse de la progression. De pouvoir casser et recommencer, s’entraîner, développer, tester des attaques et des outils.
 
 Pourtant, la mise en place d’un lab peut être longue et fastidieuse, il faut parfois plusieurs mois pour atteindre un résultat satisfaisant qui sera dans tous les cas difficile à reproduire. Ludus permet de pallier ce problème : en effet cet outil basé sur Ansible permet de déployer relativement facilement des labs complexes sur des hyperviseurs.
 
-![image.png](img/image.png)
+![Schéma Ludus : d'un fichier de config à un cyber range déployé](img/schema-fonctionnement-ludus.png)
 
 Ci-dessus la promesse de Ludus, transformer un “simple” fichier de configuration en un lab démarré et exploitable.
 
@@ -18,7 +19,7 @@ Ici j’explique quelques rudiments du fonctionnement de Ludus et vous montre co
 
 A la fin de cet article, nous aurons compris comment fonctionne Ludus et déployé notre premier range qui sera ainsi :
 
-![image.png](img/image%201.png)
+![Objectif : cyber range Ludus (AD + Windows + Kali) sur Proxmox](img/schema-objectif-cible.png)
 
 ## Prérequis
 
@@ -44,7 +45,7 @@ Pour ce projet, nous avons opté pour **Proxmox**, un Type 1 basé sur Debian. I
 
 Afin d’installer Proxmox, le guide suivant est assez détaillé sur le sujet : [https://pve.Proxmox.com/wiki/Installation](https://pve.proxmox.com/wiki/Installation). En somme cela ressemble à n’importe quelle installation de système d’exploitation sauf que cette fois il s’agit d’installer notre hyperviseur de type 1.
 
-![image.png](img/image%202.png)
+![Interface Proxmox après installation (hyperviseur bare metal)](img/exemple-proxmox.png)
 
 *Exemple d’un promox installé*
 
@@ -66,7 +67,7 @@ Ludus est un outil de déploiement d'infrastructure (Infrastructure-as-Code) sp�
 
 De manière schématique voici comment est fait un range ludus :
 
-![image.png](img/image%203.png)
+![Architecture Ludus : templates et linked clones](img/ludus-architecture.png)
 
 Les template sont des VM-types précontruits par Ludus quand on fait `ludus template build` . Les VM sont des clones liés à leur template d’origine. Clone lié signifie que le disque de la VM ne stocke que la différence avec le template d’origine ce qui sauvegarde beaucoup d’espace. 
 
@@ -74,7 +75,7 @@ Les template sont des VM-types précontruits par Ludus quand on fait `ludus temp
 
 Enfin on peut remarquer la VM Network en rouge, celle-ci est chargée de faire communiquer toutes les VM entre elles. Par défaut aucune segmentation réseau n’est appliquée. Cependant dans la configuration, on choisira pour chaque machine un VLAN et chaque machine de même VLAN sera sur la même interface réseau virtuelle. Voici un schéma simplifié du fonctionnement du réseau dans ludus :
 
-![image.png](img/image%204.png)
+![Réseau Ludus : segmentation par VLAN et VM router](img/architecture-reseau.png)
 
 Ainsi les VM sur le même VLAN peuvent communiquer entre elles sans passer par la VM network ( appelée router dans ludus ) mais pour aller du VLAN 1 au VLAN 2, on passera nécessairement par la VM Network.
 
@@ -299,19 +300,19 @@ Maintenant que notre lab est déployé on peut désormais y accéder sur notre h
 
 Ex en double-clickant sur la vm `...-ad-win11-22h2-enterprise-x64-1` qui est notre contrôleur de domaine :
 
-![Screenshot_20251226_215218.png](img/Screenshot_20251226_215218.png)
+![Connexion au contrôleur de domaine Windows dans le lab Ludus](img/controleur-de-domaine-1.png)
 
 Remarquez que grâce à ludus, vous êtes automatiquement connecté à la VM.
 
 Maintenant si on essaye de se connecter à la workstation :
 
-![Screenshot_20251226_215515.png](img/Screenshot_20251226_215515.png)
+![Workstation Windows : échec d’autologon (user absent du domaine)](img/workstation-1.png)
 
 Cette fois, la magie n’opère pas. En effet, dans les paramètres de la VM nous avions définit :
 
 ```jsx
-		  autologon_user: myuser      # Utilisateur pour l'auto-logon. Par défaut : localuser ou ad_domain_user
-      autologon_password: mypass  # Mot de passe pour l'auto-logon.
+        autologon_user: myuser      # Utilisateur pour l'auto-logon. Par défaut : localuser ou ad_domain_user
+        autologon_password: mypass  # Mot de passe pour l'auto-logon.
 ```
 
 Cependant, cet utilisateur n’existe pas au niveau du domaine, il faut maintenant modifier les paramètres de notre range pour ajouter cet utilisateur automatiquement.
@@ -407,7 +408,7 @@ Afin de ne pas relancer tout le déploiement de notre range, on peut lancer la c
 
 Cette fois on peut se logger avec notre nouvel utilisateur sur la machine de travail :
 
-![Screenshot_20251226_224344.png](img/Screenshot_20251226_224344.png)
+![Workstation Windows : connexion réussie après ajout de l’utilisateur AD](img/workstation-2.png)
 
 ## Ajouter des template à ludus
 
