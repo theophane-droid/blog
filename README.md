@@ -9,12 +9,12 @@ Source code and content for **nobisd.fr** (posts, pages, theme overrides, and bu
 ## Tech
 - Hugo (static site generator)
 - Markdown content
-- Theme: PaperMod (or your current theme)
+- Theme: PaperMod 
 
 ## Local development
 
 ### Requirements
-- Hugo (extended recommended)
+- Hugo 
 
 ### Run
 ```bash
