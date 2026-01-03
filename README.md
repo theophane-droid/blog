@@ -33,13 +33,6 @@ hugo --minify
 hugo new posts/my-post.md
 ```
 
-## SEO notes
-
-* One H1 per page (the title). Use H2/H3 for sections.
-* Add summary/description in front-matter.
-* Optimize images (WebP when possible, meaningful filenames, alt text).
-* Internal linking between related posts.
-
 ## Contributing
 
 Issues and PRs welcome (typos, improvements, suggestions).
